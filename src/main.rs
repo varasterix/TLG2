@@ -1,3 +1,5 @@
+mod thomas;
+
 fn main() {
-    println!("Hello, world!");
+    thomas::run();
 }
