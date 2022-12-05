@@ -41,6 +41,60 @@ impl ops::Div<&Vec3> for &Vec3 {
     }
 }
 
+impl ops::Mul<f32> for Vec3 {
+    type Output = Vec3;
+    fn mul(self, other: f32) -> Vec3 {
+        Vec3::new(self.x * other, self.y * other, self.z * other)
+    }
+}
+
+impl ops::Mul<u32> for Vec3 {
+    type Output = Vec3;
+    fn mul(self, other: u32) -> Vec3 {
+        Vec3::new(
+            self.x * other as f32,
+            self.y * other as f32,
+            self.z * other as f32,
+        )
+    }
+}
+
+impl ops::Mul<Vec3> for f32 {
+    type Output = Vec3;
+    fn mul(self, other: Vec3) -> Vec3 {
+        Vec3::new(self * other.x, self * other.y, self * other.z)
+    }
+}
+
+impl ops::Mul<Vec3> for u32 {
+    type Output = Vec3;
+    fn mul(self, other: Vec3) -> Vec3 {
+        Vec3::new(
+            self as f32 * other.x,
+            self as f32 * other.y,
+            self as f32 * other.z,
+        )
+    }
+}
+
+impl ops::Div<f32> for Vec3 {
+    type Output = Vec3;
+    fn div(self, other: f32) -> Vec3 {
+        Vec3::new(self.x / other, self.y / other, self.z / other)
+    }
+}
+
+impl ops::Div<u32> for Vec3 {
+    type Output = Vec3;
+    fn div(self, other: u32) -> Vec3 {
+        Vec3::new(
+            self.x / other as f32,
+            self.y / other as f32,
+            self.z / other as f32,
+        )
+    }
+}
+
 impl Vec3 {
     pub fn dot(&self, other: &Vec3) -> f32 {
         let prod = self * other;
