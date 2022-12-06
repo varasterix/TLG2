@@ -112,4 +112,8 @@ impl Vec3 {
             &self.x * &other.y - &self.y * &other.x,
         )
     }
+
+    pub fn unit_vector(&self) -> Vec3 {
+        self / &self.norm()
+    }
 }
