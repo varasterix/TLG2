@@ -41,28 +41,10 @@ impl ops::Div<&Vec3> for &Vec3 {
     }
 }
 
-impl ops::Mul<f32> for &Vec3 {
-    type Output = Vec3;
-    fn mul(self, other: f32) -> Vec3 {
-        Vec3::new(self.x * other, self.y * other, self.z * other)
-    }
-}
-
 impl ops::Mul<&f32> for &Vec3 {
     type Output = Vec3;
     fn mul(self, other: &f32) -> Vec3 {
         Vec3::new(self.x * other, self.y * other, self.z * other)
-    }
-}
-
-impl ops::Mul<u32> for &Vec3 {
-    type Output = Vec3;
-    fn mul(self, other: u32) -> Vec3 {
-        Vec3::new(
-            self.x * other as f32,
-            self.y * other as f32,
-            self.z * other as f32,
-        )
     }
 }
 
@@ -77,28 +59,10 @@ impl ops::Mul<&u32> for &Vec3 {
     }
 }
 
-impl ops::Mul<&Vec3> for f32 {
-    type Output = Vec3;
-    fn mul(self, other: &Vec3) -> Vec3 {
-        Vec3::new(self * other.x, self * other.y, self * other.z)
-    }
-}
-
 impl ops::Mul<&Vec3> for &f32 {
     type Output = Vec3;
     fn mul(self, other: &Vec3) -> Vec3 {
         Vec3::new(self * other.x, self * other.y, self * other.z)
-    }
-}
-
-impl ops::Mul<&Vec3> for u32 {
-    type Output = Vec3;
-    fn mul(self, other: &Vec3) -> Vec3 {
-        Vec3::new(
-            self as f32 * other.x,
-            self as f32 * other.y,
-            self as f32 * other.z,
-        )
     }
 }
 
@@ -113,28 +77,10 @@ impl ops::Mul<&Vec3> for &u32 {
     }
 }
 
-impl ops::Div<f32> for &Vec3 {
-    type Output = Vec3;
-    fn div(self, other: f32) -> Vec3 {
-        Vec3::new(self.x / other, self.y / other, self.z / other)
-    }
-}
-
 impl ops::Div<&f32> for &Vec3 {
     type Output = Vec3;
     fn div(self, other: &f32) -> Vec3 {
         Vec3::new(self.x / other, self.y / other, self.z / other)
-    }
-}
-
-impl ops::Div<u32> for &Vec3 {
-    type Output = Vec3;
-    fn div(self, other: u32) -> Vec3 {
-        Vec3::new(
-            self.x / other as f32,
-            self.y / other as f32,
-            self.z / other as f32,
-        )
     }
 }
 
@@ -157,5 +103,13 @@ impl Vec3 {
 
     pub fn norm(&self) -> f32 {
         self.dot(self).sqrt()
+    }
+
+    pub fn cross(&self, other: &Vec3) -> Vec3 {
+        Vec3::new(
+            &self.y * &other.z - &self.z * &other.y,
+            &self.z * &other.x - &self.x * &other.z,
+            &self.x * &other.y - &self.y * &other.x,
+        )
     }
 }
