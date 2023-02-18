@@ -1,16 +1,11 @@
 use std::fmt;
 use std::ops;
 
+#[derive(Copy, Clone)]
 pub struct Vec3 {
     x: f32,
     y: f32,
     z: f32,
-}
-
-impl Vec3 {
-    pub fn new(x: f32, y: f32, z: f32) -> Vec3 {
-        Vec3 { x, y, z }
-    }
 }
 
 impl fmt::Display for Vec3 {
@@ -24,6 +19,14 @@ impl ops::Add<&Vec3> for &Vec3 {
 
     fn add(self, other: &Vec3) -> Vec3 {
         Vec3::new(self.x + other.x, self.y + other.y, self.z + other.z)
+    }
+}
+
+impl ops::Sub<&Vec3> for &Vec3 {
+    type Output = Vec3;
+
+    fn sub(self, other: &Vec3) -> Vec3 {
+        Vec3::new(self.x - other.x, self.y - other.y, self.z - other.z)
     }
 }
 
@@ -96,6 +99,22 @@ impl ops::Div<&u32> for &Vec3 {
 }
 
 impl Vec3 {
+    pub fn new(x: f32, y: f32, z: f32) -> Vec3 {
+        Vec3 { x, y, z }
+    }
+
+    pub fn x(&self) -> f32 {
+        self.x
+    }
+
+    pub fn y(&self) -> f32 {
+        self.y
+    }
+
+    pub fn z(&self) -> f32 {
+        self.z
+    }
+
     pub fn dot(&self, other: &Vec3) -> f32 {
         let prod = self * other;
         prod.x + prod.y + prod.z
