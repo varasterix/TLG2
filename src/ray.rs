@@ -26,7 +26,7 @@ impl Ray {
         &self.direction
     }
 
-    pub fn at(&self, other: &f32) -> Vec3 {
+    pub fn at(&self, other: f64) -> Vec3 {
         &self.origin + &(other * &self.direction)
     }
 }
