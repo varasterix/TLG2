@@ -3,14 +3,13 @@ mod ray;
 mod vec3;
 use crate::vec3::Vec3;
 
-fn main() {
-    const WIDTH: u32 = 256;
-    const HEIGHT: u32 = 256;
-    const PATH: &str = "out/out.png";
-    run(WIDTH, HEIGHT, PATH);
+fn ray_color(r: &ray::Ray) -> Vec3 {
+    let unit_direction: vec3::Vec3 = vec3::Vec3::unit_vector(r.direction());
+    let t = 0.5 * (unit_direction.y() + 1.0);
+    return &(&(1.0 - t) * &Vec3::new(1.0, 1.0, 1.0)) + &(&t * &Vec3::new(0.5, 0.7, 1.0));
 }
 
-pub fn run(width: u32, height: u32, path: &str) {
+fn main() {
     // Image
     let aspect_ratio = 16.0 / 9.0;
     let image_width: u32 = 400;
@@ -28,17 +27,13 @@ pub fn run(width: u32, height: u32, path: &str) {
         - &Vec3::new(0.0, 0.0, focal_length);
 
     // Render
-    let mut buffer = vec![];
-    for y in 0..height {
-        eprintln!("Scanlines remaining {}", height - y);
-        for x in 0..width {
-            let u = x / (image_width - 1);
-            let v = y / (image_height - 1);
-            let r = (x * 255 / width) as u8;
-            let g = (y * 255 / height) as u8;
-            let b = (width - x) as f32 / width as f32 * (height - y) as f32 / height as f32;
-            let b = (b * 255.) as u8;
-            buffer.extend([r, g, b]);
+    print!("P3\n{} {}\n255\n", image_width, image_height);
+
+    for j in (0..image_height - 1).rev() {
+        eprintln!("Scanlines remaining {}", j);
+        for i in 0..image_width {
+            let u = i / (image_width - 1);
+            let v = j / (image_height - 1);
             let r: ray::Ray = ray::Ray::new(
                 origin,
                 &(&(&lower_left_corner + &(&u * &horizontal)) + &(&v * &vertical)) - &origin,
@@ -48,13 +43,5 @@ pub fn run(width: u32, height: u32, path: &str) {
         }
     }
 
-    image::save_buffer(path, &buffer, width, height, image::ColorType::Rgb8).unwrap();
-
     eprintln!("Done.")
-}
-
-fn ray_color(r: &ray::Ray) -> Vec3 {
-    let unit_direction: vec3::Vec3 = vec3::Vec3::unit_vector(r.direction());
-    let t = 0.5 * (unit_direction.y() + 1.0);
-    return &(&(1.0 - t) * &Vec3::new(1.0, 1.0, 1.0)) + &(&t * &Vec3::new(0.5, 0.7, 1.0));
 }
