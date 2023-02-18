@@ -1,5 +1,4 @@
 use image;
-use crate::vec3::Vec3;
 
 // (0; 0) is top-left corner
 // x -> right
@@ -22,11 +21,5 @@ pub fn run() {
         }
     }
 
-    image::save_buffer(
-        PATH,
-        &buffer,
-        WIDTH,
-        HEIGHT,
-        image::ColorType::Rgb8,
-    ).unwrap();
+    image::save_buffer(PATH, &buffer, WIDTH, HEIGHT, image::ColorType::Rgb8).unwrap();
 }
