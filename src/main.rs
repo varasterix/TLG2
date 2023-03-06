@@ -5,7 +5,7 @@ mod vec3;
 use crate::vec3::Vec3;
 
 fn ray_color(r: &ray::Ray) -> Vec3 {
-    let unit_direction: vec3::Vec3 = vec3::Vec3::unit_vector(r.direction());
+    let unit_direction: vec3::Vec3 = vec3::Vec3::normalize(r.direction());
     let t = 0.5 * (unit_direction.y() + 1.0);
     return &((1.0 - t) * &Vec3::new(1.0, 1.0, 1.0)) + &(t * &Vec3::new(0.5, 0.7, 1.0));
 }
