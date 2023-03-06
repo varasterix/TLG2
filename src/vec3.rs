@@ -48,7 +48,7 @@ impl ops::Div<&Vec3> for &Vec3 {
     type Output = Vec3;
 
     fn div(self, other: &Vec3) -> Vec3 {
-        self * &other.inverse()
+        Vec3::new(self.x / other.x, self.y / other.y, self.z / other.z)
     }
 }
 
@@ -88,7 +88,7 @@ impl ops::Div<f64> for &Vec3 {
     type Output = Vec3;
 
     fn div(self, other: f64) -> Vec3 {
-        Vec3::new(self.x / other, self.y / other, self.z / other)
+        self * (1.0 / other)
     }
 }
 
@@ -97,22 +97,6 @@ impl ops::Div<i64> for &Vec3 {
 
     fn div(self, other: i64) -> Vec3 {
         self / other as f64
-    }
-}
-
-impl ops::Div<&Vec3> for f64 {
-    type Output = Vec3;
-
-    fn div(self, other: &Vec3) -> Vec3 {
-        self * &other.inverse()
-    }
-}
-
-impl ops::Div<&Vec3> for i64 {
-    type Output = Vec3;
-
-    fn div(self, other: &Vec3) -> Vec3 {
-        self as f64 / other
     }
 }
 
@@ -150,12 +134,8 @@ impl Vec3 {
         )
     }
 
-    pub fn unit_vector(&self) -> Vec3 {
+    pub fn normalize(&self) -> Vec3 {
         self / self.norm()
-    }
-
-    pub fn inverse(&self) -> Vec3 {
-        Vec3::new(1. / self.x, 1. / self.y, 1. / self.z)
     }
 }
 
@@ -298,5 +278,102 @@ mod tests {
         assert!((mul.x - res.x).abs() < epsilon);
         assert!((mul.y - res.y).abs() < epsilon);
         assert!((mul.z - res.z).abs() < epsilon);
+    }
+
+    #[test]
+    fn test_mul_scalar_4() {
+        let a: Vec3 = Vec3::new(2.9, 0., -3.5);
+        let b: i64 = 4;
+        let mul: Vec3 = &a * b;
+        let res: Vec3 = Vec3::new(11.6, 0., -14.0);
+
+        let epsilon: f64 = 0.000001;
+
+        assert!((mul.x - res.x).abs() < epsilon);
+        assert!((mul.y - res.y).abs() < epsilon);
+        assert!((mul.z - res.z).abs() < epsilon);
+    }
+
+    #[test]
+    fn test_div_scalar_1() {
+        let a: Vec3 = Vec3::new(1., 1., 1.);
+        let b: f64 = 1.;
+        let res: Vec3 = Vec3::new(1., 1., 1.);
+
+        assert_eq!(&a / b, res);
+    }
+
+    #[test]
+    fn test_div_scalar_2() {
+        let a: Vec3 = Vec3::new(2.9, 0., -3.5);
+        let b: f64 = 3.2;
+        let mul: Vec3 = &a / b;
+        let res: Vec3 = Vec3::new(0.90625, 0., -1.09375);
+
+        let epsilon: f64 = 0.000001;
+
+        assert!((mul.x - res.x).abs() < epsilon);
+        assert!((mul.y - res.y).abs() < epsilon);
+        assert!((mul.z - res.z).abs() < epsilon);
+    }
+
+    #[test]
+    fn test_div_scalar_3() {
+        let a: Vec3 = Vec3::new(2.9, 0., -3.5);
+        let b: i64 = 4;
+        let mul: Vec3 = &a / b;
+        let res: Vec3 = Vec3::new(0.725, 0., -0.875);
+
+        let epsilon: f64 = 0.000001;
+
+        assert!((mul.x - res.x).abs() < epsilon);
+        assert!((mul.y - res.y).abs() < epsilon);
+        assert!((mul.z - res.z).abs() < epsilon);
+    }
+
+    #[test]
+    fn test_dot_1() {
+        let a: Vec3 = Vec3::new(1., 2., 3.);
+        let b: Vec3 = Vec3::new(0., 0., 0.);
+        let res: f64 = 0.;
+
+        assert_eq!(a.dot(&b), res);
+    }
+
+    #[test]
+    fn test_dot_2() {
+        let a: Vec3 = Vec3::new(1., 2., 3.);
+        let b: Vec3 = Vec3::new(-2., 1., 4.);
+        let res: f64 = 12.;
+
+        assert_eq!(a.dot(&b), res);
+    }
+
+    #[test]
+    fn test_norm_1() {
+        let a: Vec3 = Vec3::new(0.,0.,0.);
+        let res: f64 = 0.;
+
+        assert_eq!(a.norm(), res);
+    }
+
+    #[test]
+    fn test_norm_2() {
+        let a: Vec3 = Vec3::new(1.,1.,1.);
+        let res: f64 = 1.73205;
+        let epsilon: f64 = 0.000001;
+
+        assert!((a.norm() - res).abs() < epsilon);
+    }
+
+    #[test]
+    fn test_norm_3() {
+        let a: Vec3 = Vec3::new(1.,2.5,-1.2);
+        let res: f64 = 2.94788;
+        let epsilon: f64 = 0.000001;
+
+        println!("{}", a.norm());
+
+        assert!((a.norm() - res).abs() < epsilon);
     }
 }
