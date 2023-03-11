@@ -14,7 +14,7 @@ fn ray_based() {
     // Image
     let aspect_ratio = 16.0 / 9.0;
     let image_width: u32 = 400;
-    let image_height: u32 = image_width / aspect_ratio as u32;
+    let image_height: u32 = (image_width as f64 / aspect_ratio) as u32;
 
     // Camera
     let viewport_height = 2.0;
