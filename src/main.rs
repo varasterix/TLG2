@@ -33,8 +33,8 @@ fn ray_based() {
     for j in (0..image_height - 1).rev() {
         eprintln!("Scanlines remaining {}", j);
         for i in 0..image_width {
-            let u = (i / (image_width - 1)) as f64;
-            let v = (j / (image_height - 1)) as f64;
+            let u = (i as f64) / (image_width - 1) as f64;
+            let v = (j as f64) / (image_height - 1) as f64;
             let r: ray::Ray = ray::Ray::new(
                 origin,
                 &(&(&lower_left_corner + &(u * &horizontal)) + &(v * &vertical)) - &origin,
