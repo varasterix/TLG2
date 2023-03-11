@@ -63,13 +63,7 @@ fn pixel_based() {
         }
     }
 
-    image::save_buffer(
-        PATH,
-        &buffer,
-        WIDTH,
-        HEIGHT,
-        image::ColorType::Rgb8,
-    ).unwrap();
+    image::save_buffer(PATH, &buffer, WIDTH, HEIGHT, image::ColorType::Rgb8).unwrap();
 }
 
 fn main() {
