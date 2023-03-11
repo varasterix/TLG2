@@ -351,7 +351,7 @@ mod tests {
 
     #[test]
     fn test_norm_1() {
-        let a: Vec3 = Vec3::new(0.,0.,0.);
+        let a: Vec3 = Vec3::new(0., 0., 0.);
         let res: f64 = 0.;
 
         assert_eq!(a.norm(), res);
@@ -359,7 +359,7 @@ mod tests {
 
     #[test]
     fn test_norm_2() {
-        let a: Vec3 = Vec3::new(1.,1.,1.);
+        let a: Vec3 = Vec3::new(1., 1., 1.);
         let res: f64 = 1.73205;
         let epsilon: f64 = 0.000001;
 
@@ -368,7 +368,7 @@ mod tests {
 
     #[test]
     fn test_norm_3() {
-        let a: Vec3 = Vec3::new(1.,2.5,-1.2);
+        let a: Vec3 = Vec3::new(1., 2.5, -1.2);
         let res: f64 = 2.94788;
         let epsilon: f64 = 0.000001;
 
