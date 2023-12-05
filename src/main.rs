@@ -6,7 +6,7 @@ mod hittable;
 mod sphere;
 
 fn hit_sphere(center: &Vec3, radius: f64, r: &ray::Ray) -> f64 {
-    let oc: Vec3 = r.origin() - center;
+    let oc = r.origin() - center;
     let a = Vec3::norm(r.direction()).powi(2);
     let half_b = Vec3::dot(&oc, r.direction());
     let c = Vec3::norm(&oc).powi(2) - (radius * radius);
@@ -21,10 +21,10 @@ fn hit_sphere(center: &Vec3, radius: f64, r: &ray::Ray) -> f64 {
 fn ray_color(r: &ray::Ray) -> Vec3 {
     let t = hit_sphere(&Vec3::new(0.0, 0.0, -1.0), 0.5, r);
     if t > 0.0 {
-        let n: Vec3 = Vec3::normalize(&(&ray::Ray::at(r, t) - &Vec3::new(0.0, 0.0, -1.0)));
+        let n = Vec3::normalize(&(&ray::Ray::at(r, t) - &Vec3::new(0.0, 0.0, -1.0)));
         return 0.5 * &Vec3::new(n.x() + 1.0, n.y() + 1.0, n.z() + 1.0);
     }
-    let unit_direction: vec3::Vec3 = vec3::Vec3::normalize(r.direction());
+    let unit_direction = vec3::Vec3::normalize(r.direction());
     let t = 0.5 * (unit_direction.y() + 1.0);
     &((1.0 - t) * &Vec3::new(1.0, 1.0, 1.0)) + &(t * &Vec3::new(0.5, 0.7, 1.0))
 }
@@ -54,7 +54,7 @@ fn ray_based() {
         for i in 0..image_width {
             let u = (i as f64) / (image_width - 1) as f64;
             let v = (j as f64) / (image_height - 1) as f64;
-            let r: ray::Ray = ray::Ray::new(
+            let r = ray::Ray::new(
                 origin,
                 &(&(&lower_left_corner + &(u * &horizontal)) + &(v * &vertical)) - &origin,
             );
