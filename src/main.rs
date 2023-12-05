@@ -1,4 +1,3 @@
-use image;
 mod color;
 mod ray;
 mod vec3;
@@ -27,7 +26,7 @@ fn ray_color(r: &ray::Ray) -> Vec3 {
     }
     let unit_direction: vec3::Vec3 = vec3::Vec3::normalize(r.direction());
     let t = 0.5 * (unit_direction.y() + 1.0);
-    return &((1.0 - t) * &Vec3::new(1.0, 1.0, 1.0)) + &(t * &Vec3::new(0.5, 0.7, 1.0));
+    &((1.0 - t) * &Vec3::new(1.0, 1.0, 1.0)) + &(t * &Vec3::new(0.5, 0.7, 1.0))
 }
 
 fn ray_based() {
@@ -67,7 +66,7 @@ fn ray_based() {
     eprintln!("Done.")
 }
 
-fn pixel_based() {
+fn _pixel_based() {
     const WIDTH: u32 = 256;
     const HEIGHT: u32 = 256;
     const PATH: &str = "out/out.png";
@@ -87,6 +86,6 @@ fn pixel_based() {
 }
 
 fn main() {
-    // pixel_based();
+    // _pixel_based();
     ray_based();
 }
